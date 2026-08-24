@@ -187,8 +187,10 @@ export function validateOAuthClient(clientId, clientSecret = null) {
   
   console.log('[OAuth Validation] ✓ Client ID validated successfully');
   
-  if (clientSecret && clientSecret !== validClientSecret) {
+  if (clientSecret && clientSecret.trim() !== (validClientSecret || '').trim()) {
     console.error('[OAuth Validation] Client secret mismatch');
+    console.error('[OAuth Validation] Received length:', clientSecret.length);
+    console.error('[OAuth Validation] Expected length:', validClientSecret ? validClientSecret.length : 0);
     throw new Error('Invalid client secret');
   }
   
